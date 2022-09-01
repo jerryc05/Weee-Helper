@@ -5,7 +5,8 @@
 // @supportURL   https://github.com/jerryc05/Weee-Helper
 // @version      0.1
 // @description  Some Weee helper functionalities
-// @match        https://sayweee.com
+// @match        https://sayweee.com/*
+// @match        https://*.sayweee.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=sayweee.com
 // @grant        none
 // ==/UserScript==
