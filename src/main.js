@@ -3,7 +3,7 @@
 // @author       jerryc05
 // @namespace    https://github.com/jerryc05
 // @supportURL   https://github.com/jerryc05/Weee-Helper
-// @version      0.1
+// @version      0.2
 // @description  Some Weee helper functionalities
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
