@@ -11,7 +11,6 @@
 // ==/UserScript==
 
 
-// @ts-check
 (() => {
   'use strict'
 
