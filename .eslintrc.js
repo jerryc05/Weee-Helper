@@ -75,10 +75,6 @@ module.exports = {
       {'max': 6}
     ],
     'no-warning-comments': 'warn',
-    'padded-blocks': [
-      'error',
-      'never'
-    ],
     'sort-imports': [
       'error',
       {'ignoreCase': true}
@@ -108,7 +104,9 @@ module.exports = {
     'no-magic-numbers': 'off',
     'no-ternary': 'off',
     'object-curly-spacing': 'off',
+    'object-property-newline': 'off',
     'one-var': 'off',
+    'padded-blocks': 'off',
     'quote-props': 'off',
     'sort-keys': 'off',
     'sort-vars': 'off',
