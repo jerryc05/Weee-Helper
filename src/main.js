@@ -3,7 +3,7 @@
 // @author       jerryc05
 // @namespace    https://github.com/jerryc05
 // @supportURL   https://github.com/jerryc05/Weee-Helper
-// @version      0.6
+// @version      0.7
 // @description  Some Weee helpers
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
@@ -46,14 +46,22 @@
   }, 0)
 
   // remove refer text
-  setTimeout(document.querySelector('[class*="referFriendText_"]').remove, 0)
+  setTimeout(() => {
+    const d = document.querySelector('#rowToolRef>div:first-child')
+    new MutationObserver((l, o) => {
+      const r = d.querySelector('[class*="referFriendText_"]')
+      if (!r) return
+      r.remove()
+      o.disconnect()
+    }).observe(d, {subtree: true, childList: true})
+  }, 0)
 
   // sort by discount rate/amount
   setTimeout(() => {
     const s = document.querySelector('[class*="sortSelectContainer_"]')
     const u = s.querySelector('ul')
     function f(u) {
-      for (const x of ['Discount %', 'Discount $']) {
+      for (const x of ['Discount % CurPage', 'Discount $ CurPage']) {
         const l = u.querySelector('li:last-child').cloneNode()
         l.textContent = x
         u.append(l)
