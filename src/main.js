@@ -3,7 +3,7 @@
 // @author       jerryc05
 // @namespace    https://github.com/jerryc05
 // @supportURL   https://github.com/jerryc05/Weee-Helper
-// @version      2
+// @version      3
 // @description  Some Weee helpers
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
@@ -14,7 +14,7 @@
 
 (() => {
   'use strict'
-  function f() {
+  new MutationObserver(() => {
     function parsePrice(x) {
       const p = parseFloat(x.querySelector('[class*="producsPrice"]').lastChild.textContent)
       const b = x.querySelector('[class*="basePrice_"]')
@@ -23,9 +23,8 @@
 
     // show discount rate
     setTimeout(() => {
-      for (const t of document.querySelectorAll('[class*="ProductCard_label_"]')) {
-        if (!t.textContent.includes('Off')) continue
-        let x = t
+      for (let x of document.querySelectorAll('[class*="ProductCard_label_"]')) {
+        if (!x.textContent.includes('Off') || x.textContent.includes('(')) continue
         while (x.tagName.toLowerCase() !== 'a') x = x.parentNode
         const [p, b] = parsePrice(x)
         if (!b) continue
@@ -40,24 +39,28 @@
     // show total amount in cart
     setTimeout(() => {
       const c = document.querySelector('[class*="miniCartInHeaderText_"]')
-      if (c !== null) {
-        const bearer = `Bearer ${document.cookie.match(/auth_token=([^;]+)/)[1]}`
-        fetch('https://api.sayweee.net/ec/so/porder/v3', {
-          headers: { 'Authorization': bearer }
-        }).then(x => x.json())
-          .then(x => {
-            c.textContent += `  $${x.object.total_price}`
-          })
-      }
+      if (!c || c.textContent.includes('  ')) return
+      c.textContent += '  '
+      fetch('https://api.sayweee.net/ec/so/porder/v3', {
+        headers: { 'Authorization': `Bearer ${document.cookie.match(/auth_token=([^;]+)/)[1]}` }
+      }).then(x => x.json())
+        .then(x => {
+          c.textContent += `$${x.object.total_price}`
+        })
     }, 0)
 
     // remove refer text
-    setTimeout(() => document.querySelector('[class*="referFriendText_"]').remove(), 0)
+    setTimeout(() => document.querySelector('[class*="referFriendText_"]')?.remove(), 0)
 
     // sort by discount rate/amount
-    setTimeout(() => {
-      const s = document.createElement('select')
+    if (window.location.pathname.includes('category/')) setTimeout(() => {
+      const ID = 'discount_sort'
+      if (document.getElementById(ID)) return
+      const h = document.querySelector('[class*="category_resultHeader_"]')
+      if (!h) return
       const DEFAULT = 'Default'
+      const s = document.createElement('select')
+      s.id = ID
       for (const x of [DEFAULT, 'Discount % CurPage', 'Discount $ CurPage']) {
         const l = document.createElement('option')
         l.text = x
@@ -80,12 +83,7 @@
           })
           .forEach(x => items.appendChild(x))
       }
-
-      const h = document.querySelector('[class*="category_resultHeader_"]')
       h.insertBefore(s, h.lastChild)
     }, 0)
-  }
-
-  if (document.readyState === 'complete') f()
-  else window.addEventListener('load', f)
+  }).observe(document.body, { childList: true, subtree: true })
 })()
