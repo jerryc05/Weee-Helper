@@ -3,7 +3,7 @@
 // @author       jerryc05
 // @namespace    https://github.com/jerryc05
 // @supportURL   https://github.com/jerryc05/Weee-Helper
-// @version      0.8
+// @version      0.9
 // @description  Some Weee helpers
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
@@ -23,12 +23,15 @@
 
   // show discount rate
   setTimeout(() => {
-    for (const x of document.querySelectorAll('[class*="resultItem_"]')) {
+    for (const x of [
+      ...document.querySelectorAll('[class*="resultItem_"]'),
+      ...document.querySelectorAll('[class*="List_list_"]>*')
+    ]) {
       const [p, b] = parsePrice(x)
       if (!b) continue
       const l = x?.querySelector('[class*="label_"]')
       if (!l) continue
-      l.textContent = `${parseFloat(((b - p) / b * 100).toFixed(3))}% Off`
+      l.textContent = `${parseFloat(((b - p) / b * 100).toFixed(2))}% ($${parseFloat((b - p).toFixed(2))}) Off`
       l.style.fontWeight = 'bold'
       l.style.backgroundColor = 'red'
     }
