@@ -3,7 +3,7 @@
 // @author       jerryc05
 // @namespace    https://github.com/jerryc05
 // @supportURL   https://github.com/jerryc05/Weee-Helper
-// @version      0.9
+// @version      0.10
 // @description  Some Weee helpers
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
@@ -23,10 +23,10 @@
 
   // show discount rate
   setTimeout(() => {
-    for (const x of [
-      ...document.querySelectorAll('[class*="resultItem_"]'),
-      ...document.querySelectorAll('[class*="List_list_"]>*')
-    ]) {
+    for (const t of document.querySelectorAll('[class*="ProductCard_label_"]')) {
+      if (!t.textContent.includes('Off')) continue
+      let x = t
+      while (x.tagName.toLowerCase() !== 'a') x = x.parentNode
       const [p, b] = parsePrice(x)
       if (!b) continue
       const l = x?.querySelector('[class*="label_"]')
