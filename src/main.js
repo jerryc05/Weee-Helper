@@ -3,7 +3,7 @@
 // @author       jerryc05
 // @namespace    https://github.com/jerryc05
 // @supportURL   https://github.com/jerryc05/Weee-Helper
-// @version      3
+// @version      4
 // @description  Some Weee helpers
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
@@ -61,7 +61,7 @@
       const DEFAULT = 'Default'
       const s = document.createElement('select')
       s.id = ID
-      for (const x of [DEFAULT, 'Discount % CurPage', 'Discount $ CurPage']) {
+      for (const x of [DEFAULT, 'Discount %', 'Discount $']) {
         const l = document.createElement('option')
         l.text = x
         l.value = x
