@@ -3,7 +3,7 @@
 // @author       jerryc05
 // @namespace    https://github.com/jerryc05
 // @supportURL   https://github.com/jerryc05/Weee-Helper
-// @version      4
+// @version      5
 // @description  Some Weee helpers
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
@@ -14,7 +14,17 @@
 
 (() => {
   'use strict'
-  new MutationObserver(() => {
+  let tIgn = false
+
+  function throttle(f, t) {
+    if (tIgn) return
+    tIgn = true
+    setTimeout(() => {
+      f()
+      tIgn = false
+    }, t)
+  }
+  new MutationObserver(() => throttle(() => {
     function parsePrice(x) {
       const p = parseFloat(x.querySelector('[class*="producsPrice"]').lastChild.textContent)
       const b = x.querySelector('[class*="basePrice_"]')
@@ -85,5 +95,6 @@
       }
       h.insertBefore(s, h.lastChild)
     }, 0)
-  }).observe(document.body, { childList: true, subtree: true })
+
+  }, 1000)).observe(document.body, { childList: true, subtree: true })
 })()
