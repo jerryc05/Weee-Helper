@@ -3,7 +3,7 @@
 // @author       jerryc05
 // @namespace    https://github.com/jerryc05
 // @supportURL   https://github.com/jerryc05/Weee-Helper
-// @version      1
+// @version      2
 // @description  Some Weee helpers
 // @match        https://sayweee.com/*
 // @match        https://*.sayweee.com/*
@@ -62,6 +62,7 @@
         const l = document.createElement('option')
         l.text = x
         l.value = x
+        if (x === DEFAULT) l.selected = true
         s.append(l)
       }
       s.onchange = () => {
